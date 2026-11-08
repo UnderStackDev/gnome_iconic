@@ -57,11 +57,11 @@ pub fn build(theme: &ThemeInfo, active: bool) -> Card {
     let remove = gtk::Button::builder()
         .icon_name("user-trash-symbolic")
         .tooltip_text("Remove Theme")
-        .css_classes(["flat", "circular", "remove"])
+        .css_classes(["circular", "osd", "remove"])
         .halign(gtk::Align::End)
         .valign(gtk::Align::Start)
-        .margin_top(6)
-        .margin_end(6)
+        .margin_top(5)
+        .margin_end(5)
         .visible(theme.user && !active)
         .build();
     let overlay = gtk::Overlay::builder().child(&content).build();
