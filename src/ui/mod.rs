@@ -20,9 +20,9 @@ const CSS: &str = "
 .search-row { margin: 12px 18px 6px; }
 .page-body { margin: 6px 18px 24px; }
 .theme-grid > flowboxchild { padding: 0; border-radius: 15px; }
-.theme-card { padding: 18px 16px 12px; }
-.theme-card .remove { opacity: 0; transition: opacity 150ms; }
-flowboxchild:hover .theme-card .remove, flowboxchild:selected .theme-card .remove, .theme-card .remove:focus { opacity: 1; }
+.theme-card { padding: 18px 16px 14px; }
+.theme-grid .remove { opacity: 0; transition: opacity 150ms; }
+flowboxchild:hover .remove, flowboxchild:selected .remove, .remove:focus { opacity: 1; }
 .theme-card.active { box-shadow: inset 0 0 0 2px var(--accent-bg-color); }
 .editor-body { margin: 18px; }
 .editor-footer { margin: 0 18px 18px; }

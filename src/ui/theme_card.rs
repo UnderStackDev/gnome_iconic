@@ -34,38 +34,40 @@ pub fn build(theme: &ThemeInfo, active: bool) -> Card {
         })
         .collect();
 
-    let name = gtk::Label::builder().label(&theme.name).css_classes(["heading"]).ellipsize(gtk::pango::EllipsizeMode::End).xalign(0.0).build();
-    let id = gtk::Label::builder().label(&theme.id).css_classes(["caption", "dimmed"]).ellipsize(gtk::pango::EllipsizeMode::End).xalign(0.0).build();
-    let labels = gtk::Box::new(gtk::Orientation::Vertical, 2);
-    labels.set_hexpand(true);
-    labels.append(&name);
+    let label = |text: &str, classes: &[&str]| {
+        gtk::Label::builder().label(text).css_classes(classes).ellipsize(gtk::pango::EllipsizeMode::End).justify(gtk::Justification::Center).build()
+    };
+    let labels = gtk::Box::builder().orientation(gtk::Orientation::Vertical).spacing(2).halign(gtk::Align::Center).build();
+    labels.append(&label(&theme.name, &["heading"]));
     if theme.id != theme.name {
-        labels.append(&id);
+        labels.append(&label(&theme.id, &["caption", "dimmed"]));
+    }
+    if active {
+        let badge = gtk::Label::builder().label("In Use").css_classes(["badge", "accent"]).halign(gtk::Align::Center).margin_top(4).build();
+        labels.append(&badge);
     }
 
-    let footer = gtk::Box::new(gtk::Orientation::Horizontal, 6);
-    footer.append(&labels);
+    let content = gtk::Box::builder().orientation(gtk::Orientation::Vertical).spacing(14).css_classes(["card", "theme-card"]).build();
+    content.append(&grid);
+    content.append(&labels);
     if active {
-        let badge = gtk::Label::builder().label("In Use").css_classes(["badge", "accent"]).valign(gtk::Align::Center).build();
-        footer.append(&badge);
+        content.add_css_class("active");
     }
+    // In the corner, so the name stays centred under the icons.
     let remove = gtk::Button::builder()
         .icon_name("user-trash-symbolic")
         .tooltip_text("Remove Theme")
         .css_classes(["flat", "circular", "remove"])
-        .valign(gtk::Align::Center)
+        .halign(gtk::Align::End)
+        .valign(gtk::Align::Start)
+        .margin_top(6)
+        .margin_end(6)
         .visible(theme.user && !active)
         .build();
-    footer.append(&remove);
+    let overlay = gtk::Overlay::builder().child(&content).build();
+    overlay.add_overlay(&remove);
 
-    let content = gtk::Box::builder().orientation(gtk::Orientation::Vertical).spacing(14).css_classes(["card", "theme-card"]).build();
-    content.append(&grid);
-    content.append(&footer);
-    if active {
-        content.add_css_class("active");
-    }
-
-    let child = gtk::FlowBoxChild::builder().child(&content).build();
+    let child = gtk::FlowBoxChild::builder().child(&overlay).build();
     if !theme.comment.is_empty() {
         child.set_tooltip_text(Some(&theme.comment));
     }
