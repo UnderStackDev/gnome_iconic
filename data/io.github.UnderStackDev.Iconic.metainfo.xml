@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.UnderStackDev.Iconic</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Iconic</name>
+  <summary>Icon themes and app launchers for GNOME</summary>
+  <description>
+    <p>Pick the desktop's icon theme from previews of every installed theme, install new themes by dropping an archive on the window, and rename, re-icon or hide app launchers without touching the package's own files.</p>
+  </description>
+  <launchable type="desktop-id">io.github.UnderStackDev.Iconic.desktop</launchable>
+  <url type="homepage">https://github.com/UnderStackDev/gnome_iconic</url>
+  <developer id="io.github.understackdev"><name>UnderStackDev</name></developer>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.1.0" date="2026-11-08"/>
+  </releases>
+</component>

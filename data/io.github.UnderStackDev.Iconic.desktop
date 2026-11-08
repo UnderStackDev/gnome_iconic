@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Iconic
+Comment=Icon themes and app launchers for GNOME
+Keywords=icon;theme;icons;launcher;
+Exec=iconic
+Icon=io.github.UnderStackDev.Iconic
+Terminal=false
+Categories=GNOME;GTK;Settings;DesktopSettings;
+StartupNotify=true
