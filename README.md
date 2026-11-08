@@ -5,6 +5,8 @@ Icon themes and app launchers for GNOME. A port of
 Rust with GTK 4 and libadwaita, so it follows your light/dark style and accent
 colour.
 
+![Picking an icon theme](docs/themes.png)
+
 - **Themes**: pick the desktop's icon theme from previews of every installed
   theme. GNOME, GTK and Flatpak apps switch right away.
 - **Install**: drop an icon theme archive or folder anywhere on the window. It
@@ -12,6 +14,8 @@ colour.
 - **Apps**: rename a launcher, give it another icon, or hide it from the app
   grid, without touching the package's own files. The editor sits beside the
   list; drop a PNG or SVG on it (from Files, say) to use it as the icon.
+
+![Changing a launcher](docs/apps.png)
 
 ## Why there is no icon layer here
 

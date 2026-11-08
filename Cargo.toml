@@ -19,7 +19,7 @@ lto = "thin"
 
 [package.metadata.deb]
 name = "iconic"
-maintainer = "UnderStackDev <satuniemin@gmail.com>"
+maintainer = "UnderStackDev <understack_dev@outlook.com>"
 license-file = ["LICENSE", "0"]
 section = "x11"
 depends = "$auto, libarchive-tools, desktop-file-utils, gtk-update-icon-cache"
