@@ -47,9 +47,13 @@ pub fn build(app: &adw::Application) -> adw::ApplicationWindow {
     glib::idle_add_local_once(glib::clone!(#[strong] themes, move || themes.focus_grid()));
     #[cfg(debug_assertions)]
     {
-        let c = ctx.clone();
-        action(&window, "debug-edit", move |v| super::app_editor::open(&c, v.and_then(|v| v.str()).unwrap_or_default()), Some(glib::VariantTy::STRING));
+        let a = apps.clone();
+        action(&window, "debug-edit", move |v| a.select(v.and_then(|v| v.str()).unwrap_or_default()), Some(glib::VariantTy::STRING));
     }
+    // Narrow windows: the launcher editor slides over the list.
+    let narrow = adw::Breakpoint::new(adw::BreakpointCondition::parse("max-width: 760sp").expect("valid condition"));
+    narrow.add_setter(&apps.root, "collapsed", Some(&true.to_value()));
+    window.add_breakpoint(narrow);
     window
 }
 
@@ -102,9 +106,11 @@ fn history_step(ctx: &Rc<Ctx>, undo: bool) {
     }
 }
 
-/// Theme archives or folders dropped anywhere go to the Install page.
+/// Theme archives or folders dropped anywhere go to the Install page,
+/// except on the Apps page, where drops are icons for the launcher editor.
 fn add_drop(window: &adw::ApplicationWindow, stack: &adw::ViewStack, install: &Rc<InstallPage>) {
     let target = gtk::DropTarget::new(gdk::FileList::static_type(), gdk::DragAction::COPY);
+    target.connect_accept(glib::clone!(#[weak] stack, #[upgrade_or] false, move |_, _| stack.visible_child_name().as_deref() != Some("apps")));
     target.connect_drop(glib::clone!(#[weak] stack, #[strong] install, #[upgrade_or] false, move |_, value, _, _| {
         let Ok(files) = value.get::<gdk::FileList>() else { return false };
         stack.set_visible_child_name("install");

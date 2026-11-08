@@ -1,10 +1,10 @@
 //! The window. Plain libadwaita: it follows the system's light/dark style
 //! and accent colour, like the Omarchy version followed the Omarchy theme.
 
-mod app_editor;
 mod apps_page;
 mod ctx;
 mod dialogs;
+mod editor_panel;
 mod icon_picker;
 mod install_page;
 #[cfg(debug_assertions)]
@@ -24,6 +24,10 @@ const CSS: &str = "
 .theme-card .remove { opacity: 0; transition: opacity 150ms; }
 flowboxchild:hover .theme-card .remove, flowboxchild:selected .theme-card .remove, .theme-card .remove:focus { opacity: 1; }
 .theme-card.active { box-shadow: inset 0 0 0 2px var(--accent-bg-color); }
+.editor-body { margin: 18px; }
+.editor-footer { margin: 0 18px 18px; }
+.icon-drop { padding: 20px; border-radius: 24px; transition: box-shadow 150ms; }
+.icon-drop:drop(active) { box-shadow: inset 0 0 0 2px var(--accent-bg-color); }
 .badge { font-size: 0.8em; font-weight: bold; padding: 2px 8px; border-radius: 99px; }
 .badge.accent { color: var(--accent-color); background: color-mix(in srgb, var(--accent-bg-color) 15%, transparent); }
 .badge.dimmed { background: alpha(currentColor, 0.1); }
@@ -36,6 +40,9 @@ pub fn clamped(child: &impl IsA<gtk::Widget>, class: &str) -> adw::Clamp {
 
 pub fn run() -> i32 {
     let app = adw::Application::builder().application_id(crate::APP_ID).build();
+    // Debug builds run beside an installed Iconic instead of handing over to it.
+    #[cfg(debug_assertions)]
+    app.set_flags(gtk::gio::ApplicationFlags::NON_UNIQUE);
     app.connect_startup(|app| {
         let provider = gtk::CssProvider::new();
         provider.load_from_string(CSS);

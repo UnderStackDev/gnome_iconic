@@ -33,7 +33,8 @@ pub fn shortcuts(window: &adw::ApplicationWindow) {
             ("Choose theme files to install", "<Control>o"),
         ]),
         ("Apps", &[
-            ("Edit the picked app", "Return"),
+            ("Edit the picked app's name", "Return"),
+            ("Pick an icon from the theme", "i"),
             ("Save the launcher", "<Control>s"),
             ("Undo", "<Control>z"),
             ("Redo", "<Control><Shift>z"),

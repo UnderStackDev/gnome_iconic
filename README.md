@@ -10,7 +10,8 @@ colour.
 - **Install**: drop an icon theme archive or folder anywhere on the window. It
   lands in `~/.local/share/icons`, where Flatpak apps can see it too.
 - **Apps**: rename a launcher, give it another icon, or hide it from the app
-  grid, without touching the package's own files.
+  grid, without touching the package's own files. The editor sits beside the
+  list; drop a PNG or SVG on it (from Files, say) to use it as the icon.
 
 ## Why there is no icon layer here
 
@@ -43,7 +44,9 @@ Ubuntu), `gtk-update-icon-cache`, `update-desktop-database`.
 | `Ctrl+F` or `/` | Search |
 | `Delete` | Remove the picked theme you installed |
 | `Ctrl+O` | Choose theme files to install |
-| `Ctrl+S` | Save the launcher (in the editor) |
+| `Enter` | Edit the picked app's name (Apps) |
+| `I` | Pick an icon from the theme (Apps) |
+| `Ctrl+S` | Save the launcher (Apps) |
 | `Ctrl+Z` / `Ctrl+Shift+Z` | Undo / redo launcher changes |
 | `Ctrl+?` | All keys |
 | `Ctrl+Q` | Quit |
