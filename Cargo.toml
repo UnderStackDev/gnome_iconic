@@ -41,8 +41,8 @@ assets = [
 ]
 
 [package.metadata.generate-rpm.requires]
-gtk4 = "*"
-libadwaita = "*"
+gtk4 = ">= 4.18"
+libadwaita = ">= 1.8"
 bsdtar = "*"
 desktop-file-utils = "*"
 gtk-update-icon-cache = "*"
