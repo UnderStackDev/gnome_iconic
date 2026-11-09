@@ -1,5 +1,5 @@
 //! The window. Plain libadwaita: it follows the system's light/dark style
-//! and accent colour, like the Omarchy version followed the Omarchy theme.
+//! and accent colour.
 
 mod apps_page;
 mod ctx;

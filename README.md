@@ -137,9 +137,9 @@ window to a PNG, since Wayland blocks screen grabs:
 ICONIC_SNAPSHOT=/tmp/shot.png ICONIC_SNAPSHOT_PAGE=apps cargo run
 ```
 
-## Also for Omarchy
+## On Omarchy?
 
-Iconic started on Omarchy. That version lives at
+There's a separate Iconic for Omarchy:
 [UnderStackDev/omarchy_iconic](https://github.com/UnderStackDev/omarchy_iconic).
 
 ## License
