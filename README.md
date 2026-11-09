@@ -1,64 +1,97 @@
-# Iconic for GNOME
+# Iconic
 
-Icon themes and app launchers for GNOME. A port of
-[Iconic for Omarchy](https://github.com/UnderStackDev/omarchy_iconic), written in
-Rust with GTK 4 and libadwaita, so it follows your light/dark style and accent
-colour.
+Change your icon theme and tidy up your app grid in GNOME.
 
-![Picking an icon theme](docs/themes.png)
+Iconic shows every icon theme you have side by side, so you can see what they
+look like before you pick one. It also lets you rename apps, give them a
+different icon, or hide the ones you never use. Nothing you change touches
+the apps themselves, and every change can be undone.
 
-- **Themes**: pick the desktop's icon theme from previews of every installed
-  theme. GNOME, GTK and Flatpak apps switch right away.
-- **Install**: drop an icon theme archive or folder anywhere on the window. It
-  lands in `~/.local/share/icons`, where Flatpak apps can see it too.
-- **Apps**: rename a launcher, give it another icon, or hide it from the app
-  grid, without touching the package's own files. The editor sits beside the
-  list; drop a PNG or SVG on it (from Files, say) to use it as the icon.
+Built with GTK 4 and libadwaita, so it fits right in and follows your light or
+dark style and accent colour.
 
-![Changing a launcher](docs/apps.png)
+![Every installed icon theme, side by side](docs/themes.png)
 
-## Why there is no icon layer here
+## Pick an icon theme
 
-Omarchy's launcher doesn't look app icons up in the active theme, so the
-Omarchy version builds an extra icon layer. GNOME Shell's app grid and dash use
-the active theme directly, so this version doesn't need one. PNG themes such as
-Yaru work as they are.
+Open **Themes** and click the one you like. GNOME, your apps and Flatpak apps
+switch to it straight away. Type to search when the list gets long.
 
-The Omarchy version's Follow/Lock mode is left out too: GNOME has no Omarchy
-theme switch to follow.
+## Install new themes
+
+Downloaded a theme from [GNOME Look](https://www.gnome-look.org/browse?cat=132)
+or GitHub? Drop the archive (`.zip`, `.tar.gz`, `.tar.xz`…) or the unpacked
+folder anywhere on the window, or open **Install** and choose the files. Iconic
+finds the themes inside, installs them for you only, and offers to switch to
+the new one.
+
+![Installing a theme](docs/install.png)
+
+Themes you installed can be removed from the Themes page with the trash button
+that appears when you hover over a card.
+
+## Change how apps look in the app grid
+
+Open **Apps** and pick an app from the list. On the right you can:
+
+- **Rename it**: type a new name.
+- **Give it another icon**: drag a PNG or SVG straight from Files onto the
+  icon, choose one from your current theme, or pick a file.
+- **Hide it**: turn off *Show in App Grid*.
+
+Press **Save** and the app grid updates. Use the *Modified* and *Hidden*
+filters to find what you've changed, and **Reset** to put an app back the way
+it was.
+
+![Editing an app](docs/apps.png)
+
+Handy tip: keep a theme's folder open in Files next to Iconic and drag icons
+across one after another.
 
 ## Install
 
+### Ubuntu and Debian
+
+Download the `.deb` from the
+[latest release](https://github.com/UnderStackDev/gnome_iconic/releases/latest)
+and run:
+
 ```sh
-cargo build --release
-cargo deb --no-build          # target/debian/iconic_*.deb
-cargo generate-rpm            # target/generate-rpm/iconic-*.rpm
-sudo apt install ./target/debian/iconic_*.deb
+sudo apt install ./iconic_*_amd64.deb
 ```
 
-Runtime needs: GTK 4, libadwaita 1.8, `bsdtar` (`libarchive-tools` on
-Ubuntu), `gtk-update-icon-cache`, `update-desktop-database`.
+### Fedora
 
-## Keys
+Download the `.rpm` from the
+[latest release](https://github.com/UnderStackDev/gnome_iconic/releases/latest)
+and run:
+
+```sh
+sudo dnf install ./iconic-*.x86_64.rpm
+```
+
+Iconic needs GTK 4.18 and libadwaita 1.8 or newer (Ubuntu 25.10, Fedora 43
+and later).
+
+## Keyboard shortcuts
 
 | Key | Action |
 |---|---|
-| `1` `2` `3` (or `Alt` + number) | Themes, Install, Apps |
-| Arrows, `Enter` / `Space` | Pick and use a theme |
+| `1` `2` `3` | Themes, Install, Apps |
+| Arrows, `Enter` | Pick and use a theme |
 | `Ctrl+F` or `/` | Search |
 | `Delete` | Remove the picked theme you installed |
 | `Ctrl+O` | Choose theme files to install |
-| `Enter` | Edit the picked app's name (Apps) |
-| `I` | Pick an icon from the theme (Apps) |
-| `Ctrl+S` | Save the launcher (Apps) |
-| `Ctrl+Z` / `Ctrl+Shift+Z` | Undo / redo launcher changes |
-| `Ctrl+?` | All keys |
-| `Ctrl+Q` | Quit |
+| `Enter` | Rename the picked app |
+| `I` | Pick an icon from the theme |
+| `Ctrl+S` | Save the app |
+| `Ctrl+Z` / `Ctrl+Shift+Z` | Undo / redo |
+| `Ctrl+?` | All shortcuts |
 
 ## Command line
 
-Everything also works without the window. Every command takes `--json` and
-exits 0 or 1.
+Everything also works from a terminal, for scripts and dotfiles. Add `--json`
+for machine-readable output.
 
 ```sh
 iconic status
@@ -70,28 +103,44 @@ iconic app set firefox --name "Web" --icon web-browser [--hide|--show]
 iconic app reset firefox
 ```
 
-## What it changes
+## What Iconic changes on your system
+
+Only files in your home folder; nothing needs administrator rights.
 
 | Where | What |
 |---|---|
-| gsettings `org.gnome.desktop.interface icon-theme` | the icon theme (GNOME, GTK, and Flatpak apps through the settings portal) |
-| `~/.config/gtk-3.0/settings.ini`, `gtk-4.0/settings.ini`, `kdeglobals`, `qt5ct`/`qt6ct` | the same theme name, only if the file already exists |
+| GNOME setting `org.gnome.desktop.interface icon-theme` | the icon theme |
+| `~/.config/gtk-3.0`, `gtk-4.0`, `kdeglobals`, `qt5ct`, `qt6ct` | the same theme name, only if these files already exist |
 | `~/.local/share/icons/` | themes you install |
-| `~/.local/share/applications/` | launcher changes: a copy marked `X-Iconic-Override=true` for package and Flatpak apps; your own launchers are edited in place after a backup in `~/.local/share/iconic/backups/` |
-| `~/.local/share/iconic/icons/` | icon files you picked for launchers |
+| `~/.local/share/applications/` | your app changes, as a personal copy of the app's launcher |
+| `~/.local/share/iconic/` | icons you picked from files, and backups |
 
-Archives are listed before they're unpacked (2 GiB / 300,000 files at most),
-unpacked by bsdtar, and only files and links that stay inside the archive are
-installed.
+Theme archives are checked before they're unpacked (2 GiB / 300,000 files at
+most), and only files that stay inside the theme are installed.
 
-## Development
+## Building from source
 
 ```sh
-cargo test
-cargo run
-# Debug builds can render the window to a PNG (Wayland blocks screen grabs):
+cargo build --release
+cargo deb --no-build          # target/debian/iconic_*.deb
+cargo generate-rpm            # target/generate-rpm/iconic-*.rpm
+```
+
+Needs Rust, GTK 4 and libadwaita development files. At runtime Iconic uses
+`bsdtar` (`libarchive-tools` on Ubuntu), `gtk-update-icon-cache` and
+`update-desktop-database`.
+
+For development, `cargo test` and `cargo run`. Debug builds can render the
+window to a PNG, since Wayland blocks screen grabs:
+
+```sh
 ICONIC_SNAPSHOT=/tmp/shot.png ICONIC_SNAPSHOT_PAGE=apps cargo run
 ```
+
+## Also for Omarchy
+
+Iconic started on Omarchy. That version lives at
+[UnderStackDev/omarchy_iconic](https://github.com/UnderStackDev/omarchy_iconic).
 
 ## License
 
