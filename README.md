@@ -70,8 +70,9 @@ and run:
 sudo dnf install ./iconic-*.x86_64.rpm
 ```
 
-Iconic needs GTK 4.18 and libadwaita 1.8 or newer (Ubuntu 25.10, Fedora 43
-and later).
+Iconic needs GTK 4.18 and libadwaita 1.8 or newer: Ubuntu 26.04 LTS or later,
+Fedora 43 or later. It doesn't run on Ubuntu 24.04 LTS, whose GTK and
+libadwaita are too old.
 
 ## Keyboard shortcuts
 
