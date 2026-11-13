@@ -1,0 +1,7 @@
+#!/bin/sh
+# Builds and installs Iconic on Arch Linux / CachyOS with makepkg.
+set -eu
+
+ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+cd "$ROOT/pkgbuild"
+exec makepkg -fsi "$@"

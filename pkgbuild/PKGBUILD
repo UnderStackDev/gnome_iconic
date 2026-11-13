@@ -1,0 +1,36 @@
+# Arch Linux / CachyOS package, built from this repo: run bin/install.
+# Named gnome-iconic because "iconic" is an unrelated app in the AUR, which
+# AUR helpers would install over this one on update.
+pkgname=gnome-iconic
+pkgver=0.2.0
+pkgrel=1
+pkgdesc='Icon themes and app launchers for GNOME'
+arch=('x86_64' 'aarch64')
+url='https://github.com/UnderStackDev/gnome_iconic'
+license=('MIT')
+depends=('gtk4' 'libadwaita' 'glib2' 'libarchive' 'desktop-file-utils' 'gtk-update-icon-cache')
+makedepends=('cargo')
+source=()
+sha256sums=()
+
+build() {
+  cd "$startdir/.."
+  export CARGO_TARGET_DIR="$srcdir/target"
+  cargo build --release --locked
+}
+
+check() {
+  cd "$startdir/.."
+  export CARGO_TARGET_DIR="$srcdir/target"
+  cargo test --release --locked
+}
+
+package() {
+  cd "$startdir/.."
+  local id=io.github.UnderStackDev.Iconic
+  install -Dm755 "$srcdir/target/release/gnome-iconic" "$pkgdir/usr/bin/gnome-iconic"
+  install -Dm644 "data/$id.desktop" "$pkgdir/usr/share/applications/$id.desktop"
+  install -Dm644 "data/$id.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/$id.svg"
+  install -Dm644 "data/$id.metainfo.xml" "$pkgdir/usr/share/metainfo/$id.metainfo.xml"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

@@ -295,6 +295,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "gnome-iconic"
+version = "0.2.0"
+dependencies = [
+ "anyhow",
+ "gtk4",
+ "libadwaita",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "gobject-sys"
 version = "0.22.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -420,17 +431,6 @@ name = "heck"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
-
-[[package]]
-name = "iconic"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "gtk4",
- "libadwaita",
- "serde_json",
- "tempfile",
-]
 
 [[package]]
 name = "indexmap"

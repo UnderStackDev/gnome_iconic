@@ -57,7 +57,7 @@ Download the `.deb` from the
 and run:
 
 ```sh
-sudo apt install ./iconic_*_amd64.deb
+sudo apt install ./gnome-iconic_*_amd64.deb
 ```
 
 ### Fedora
@@ -67,8 +67,22 @@ Download the `.rpm` from the
 and run:
 
 ```sh
-sudo dnf install ./iconic-*.x86_64.rpm
+sudo dnf install ./gnome-iconic-*.x86_64.rpm
 ```
+
+### Arch Linux and CachyOS
+
+Build and install the package from this repository:
+
+```sh
+git clone https://github.com/UnderStackDev/gnome_iconic
+cd gnome_iconic
+bin/install
+```
+
+To update later, run `git pull && bin/install`. The package is called
+`gnome-iconic`. It isn't in the AUR, and the AUR package called `iconic` is a
+different app.
 
 Iconic needs GTK 4.18 and libadwaita 1.8 or newer: Ubuntu 26.04 LTS or later,
 Fedora 43 or later. It doesn't run on Ubuntu 24.04 LTS, whose GTK and
@@ -91,17 +105,17 @@ libadwaita are too old.
 
 ## Command line
 
-Everything also works from a terminal, for scripts and dotfiles. Add `--json`
-for machine-readable output.
+Everything also works from a terminal with the `gnome-iconic` command, for
+scripts and dotfiles. Add `--json` for machine-readable output.
 
 ```sh
-iconic status
-iconic list-themes
-iconic apply Papirus-Dark
-iconic install ~/Downloads/theme.tar.xz [--replace|--keep-both] [--apply]
-iconic app list [--modified|--hidden]
-iconic app set firefox --name "Web" --icon web-browser [--hide|--show]
-iconic app reset firefox
+gnome-iconic status
+gnome-iconic list-themes
+gnome-iconic apply Papirus-Dark
+gnome-iconic install ~/Downloads/theme.tar.xz [--replace|--keep-both] [--apply]
+gnome-iconic app list [--modified|--hidden]
+gnome-iconic app set firefox --name "Web" --icon web-browser [--hide|--show]
+gnome-iconic app reset firefox
 ```
 
 ## What Iconic changes on your system
@@ -123,8 +137,8 @@ most), and only files that stay inside the theme are installed.
 
 ```sh
 cargo build --release
-cargo deb --no-build          # target/debian/iconic_*.deb
-cargo generate-rpm            # target/generate-rpm/iconic-*.rpm
+cargo deb --no-build          # target/debian/gnome-iconic_*.deb
+cargo generate-rpm            # target/generate-rpm/gnome-iconic-*.rpm
 ```
 
 Needs Rust, GTK 4 and libadwaita development files. At runtime Iconic uses

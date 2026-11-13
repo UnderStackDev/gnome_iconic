@@ -6,7 +6,7 @@ use anyhow::{Context, Result, bail};
 use serde_json::{Value, json};
 use std::path::Path;
 
-const USAGE: &str = "Usage: iconic [command]
+const USAGE: &str = "Usage: gnome-iconic [command]
 
   (no command), open        Open the window
   status                    Show the icon theme
@@ -45,7 +45,7 @@ pub fn run(mut args: Vec<String>) -> i32 {
             if json {
                 println!("{}", json!({"ok": false, "error": format!("{e:#}")}));
             }
-            eprintln!("iconic: {e:#}");
+            eprintln!("gnome-iconic: {e:#}");
             1
         }
     }
@@ -62,7 +62,7 @@ fn has(args: &[String], flag: &str) -> bool {
 
 fn apply_theme(id: &str) -> Result<()> {
     if !themes::scan().iter().any(|t| t.id == id) {
-        bail!("no icon theme \"{id}\" (see iconic list-themes)");
+        bail!("no icon theme \"{id}\" (see gnome-iconic list-themes)");
     }
     settings::apply(id)
 }
@@ -90,7 +90,7 @@ fn dispatch(args: &[String]) -> Result<(Value, String)> {
             Ok((json!({"themes": rows}), text))
         }
         "apply" => {
-            let id = args.get(1).filter(|a| !a.starts_with("--")).context("apply needs a theme name (see iconic list-themes)")?;
+            let id = args.get(1).filter(|a| !a.starts_with("--")).context("apply needs a theme name (see gnome-iconic list-themes)")?;
             apply_theme(id)?;
             Ok((json!({"theme": id}), format!("Icon theme: {id}")))
         }
@@ -153,7 +153,7 @@ fn app_command(args: &[String]) -> Result<(Value, String)> {
         return Ok((json!({"apps": rows}), text));
     }
     let wanted = args.get(2).map(|s| s.trim_end_matches(".desktop")).unwrap_or("");
-    let entry = apps.iter().find(|e| e.id == wanted).with_context(|| format!("no launcher with id \"{wanted}\" (see iconic app list)"))?;
+    let entry = apps.iter().find(|e| e.id == wanted).with_context(|| format!("no launcher with id \"{wanted}\" (see gnome-iconic app list)"))?;
     match sub {
         "set" => {
             let mut icon = option(args, "--icon");
