@@ -75,6 +75,7 @@ sudo dnf install ./gnome-iconic-*.x86_64.rpm
 Build and install the package from this repository:
 
 ```sh
+sudo pacman -S --needed git base-devel
 git clone https://github.com/UnderStackDev/gnome_iconic
 cd gnome_iconic
 bin/install
